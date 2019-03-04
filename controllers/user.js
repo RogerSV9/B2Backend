@@ -2,6 +2,26 @@
 
 const User = require('../models/user')
 
+function getUsers(req, res){
+    User.find({}, (err, users)=>{
+        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
+        if(!users) return res.status(404).send({message: `No existen productos`})
+        
+        res.status(200).send(users);
+    })
+}
+
+function getUser(req, res){
+    let username = req.params.username
+
+    User.findOne(username, (err, user) =>{
+        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
+        if(!user) return res.status(404).send({message: `El producto no existe`})
+
+        res.status(200).send({user})
+    })
+}
+
 function createUser(req, res){
     console.log(req.body)
     let user = new User()
@@ -27,5 +47,7 @@ function createUser(req, res){
 }
 
 module.exports = {
+    getUsers,
+    getUser,
     createUser
 }

@@ -1,9 +1,8 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const moment = require('moment')
 const Schema = mongoose.Schema
-var ageCalculator = require('age-calculator');
-let {AgeFromDateString, AgeFromDate} = require('age-calculator');
 
 
 const UserSchema = Schema({
@@ -14,18 +13,16 @@ const UserSchema = Schema({
     email: { type: String, unique:true, lowercase: true},
     signUpDate: { type: Date, default: Date.now()},
     lastLogin: Date,
-    age: Date,
+    age: String,
     picture: String,
     description: String,
     localization: String,
     premium: Boolean,
     tag: [] 
 })
-
-let ageFromDate = new AgeFromDate(new Date(1987, 0, 8)).age;
-console.log("value from AgeFromDate", ageFromDate);
- 
-let ageFromString = new AgeFromDateString('1987-01-08').age;
-console.log("value from ageFromString", ageFromString);
-
+//let age = moment('16-10-1998').format('DD-MM-YYYY').fromNow()
+//console.log(age)
+//var localLocale = moment('1993-10-23').format('YYYY-MM-DD').fromNow();
+//moment.locale('es');
+//console.log(localLocale)
 module.exports = mongoose.model('User', UserSchema)
