@@ -1,0 +1,21 @@
+{
+    "tag": [
+        "hiphop",
+        "rock"
+    ],
+    "matches": [{
+        "username": "laiam",
+        "confirmed": false
+    }
+    ],
+    "name": "Reva",
+    "surname": "Dhawan",
+    "username": "rdhawan",
+    "password": "pass",
+    "email": "rdhawan@gmail.com",
+    "age": "2016-11-23",
+    "picture": "reva.png",
+    "description": "I love Maka",
+    "localization": "Lloret de Mar",
+    "premium": true
+}
