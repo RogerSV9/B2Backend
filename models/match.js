@@ -6,9 +6,13 @@ const Schema = mongoose.Schema
 
 
 const MatchSchema = new Schema({
-        username: String,
+        username1: String,
         confirmed: Boolean,
-        matchDate: Date
+        matchDate: Date,
+        username2: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+        }
 })
 
 module.exports = mongoose.model('Match', MatchSchema)
