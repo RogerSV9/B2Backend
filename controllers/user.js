@@ -91,8 +91,6 @@ function deleteUser (req, res) {
    };
 
 
-
-
 //Sign In
 function signin (req, res) {
   User.find({ email: req.body.email }, (err, user) => {
