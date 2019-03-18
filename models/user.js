@@ -20,8 +20,17 @@ const UserSchema = new Schema({
     tag: [],
     matches: [{
         type: Schema.Types.ObjectId,
-        ref: "Match"
-    }]
+        ref: 'Match'
+    }],
+    ratings: [
+        {
+            numberOfStars: Number,
+            created: { 
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 })
 
 let age = moment('2016-11-23').fromNow()

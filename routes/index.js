@@ -6,8 +6,14 @@ const matchCtrl = require('../controllers/match')
 const api = express.Router()
 
 api.get('/users', userCtrl.getUsers)
-api.post('/user', userCtrl.createUser)
+//api.get('/users', userCtrl.getUser1)
+api.get('/users/:_id', userCtrl.getUser2)
+api.post('/users', userCtrl.createUser)
+api.put('/users/:_id', userCtrl.updateUser)
+api.delete('/users/:_id', userCtrl.deleteUser)
+api.post('/signin', userCtrl.signin)
+
 api.get('/matches', matchCtrl.getMatches)
-api.post('/match', matchCtrl.createMatch)
+api.post('/matches', matchCtrl.createMatch)
 
 module.exports = api
