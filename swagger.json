@@ -270,12 +270,12 @@
       
       "UserSignIn": {
         "required": [
-          "username",
+          "email",
           "password"         
         ],
         "properties": {
         
-          "username": {
+          "email": {
             "type": "string"
           },
           "password": {

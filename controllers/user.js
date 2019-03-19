@@ -97,7 +97,7 @@ function deleteUser (req, res) {
 function signin (req, res) {
   User.find({ email: req.body.email }, (err, user) => {
       console.log(!user)
-      console.log(user )
+      console.log(User.email)
       if (err) return res.status(500).send ({ message: err})
       if (user.length === 0) return res.status(404).send({ message: 'No existe el usuario'})
 
@@ -107,6 +107,7 @@ function signin (req, res) {
           //token: service.createToken(user)
       })
   })
+ 
 }   
 
 
