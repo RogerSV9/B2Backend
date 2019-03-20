@@ -33,6 +33,8 @@ function createMatch(req, res){
     })
 }
 
+
+//Get matches
 function getMatches(req, res){
     Match.find({}, (err, matches)=>{
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
@@ -43,6 +45,6 @@ function getMatches(req, res){
 }
 
 module.exports = {
-    getMatches,
-    createMatch
+    createMatch,
+    getMatches
 }

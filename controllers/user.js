@@ -87,15 +87,7 @@ function deleteUser (req, res) {
     })
    };
 
-//usuario de la lista
-function getUsersList(req, res) {
-  User.find({}, (err, users) => {
-      if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
-      if (!users) return res.status(404).send({ message: `No existen productos` })
 
-      res.status(200).send(users);
-  })
-}
 //Sign In
 function signin (req, res) {
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -117,6 +109,5 @@ module.exports = {
     getUser2,
     updateUser,
     deleteUser,
-    signin,
-    getUsersList    
+    signin    
 }

@@ -34,7 +34,7 @@
           "tags": [
             "Users"
           ],
-          "description": "Create new user in system",
+          "summary": "Register a new user in the system",
           "parameters": [
             {
               "name": "user",
@@ -61,7 +61,7 @@
           "tags": [
             "Users"
           ],
-          "summary": "Get all users in system",
+          "summary": "Get all users in the system",
           "responses": {
             "200": {
               "description": "OK",
@@ -73,24 +73,6 @@
         }
       },
 
-
-      "/listusers": {
-        "get": {
-            "tags": [
-                "Users"
-            ],
-            "summary": "Returns all users in the database",
-            "responses": {
-                "200": {
-                    "description": "Returns the list of users",
-                    "schema": {
-                        "type": "array",
-                        "$ref": "#/definitions/Users"
-                    }
-                }
-            }
-        }
-    },
     
       "/users/{userId}": {
         "parameters": [
@@ -131,7 +113,7 @@
           }
         },
         "put": {
-          "summary": "Update user with give ID",
+          "summary": "Update user with given ID",
           "tags": [
             "Users"
           ],
@@ -162,7 +144,7 @@
           "tags": [
             "Users"
           ],
-          "description": "Sign In",
+          "summary": "Login",
           "parameters": [
             {
               "name": "user",
@@ -194,7 +176,7 @@
           "tags": [
             "Matches"
           ],
-          "description": "Create new user in system",
+          "summary": "Create new match between two users",
           "parameters": [
             {
               "name": "match",
