@@ -36,7 +36,7 @@ function getUsers(req, res){
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
         if(!users) return res.status(404).send({message: `No existen productos`})
         
-        res.status(200).send(users);
+        res.status(200).send(users)
     })
 }
 
@@ -49,7 +49,7 @@ function getUser1 (req, res){
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
         if(!user) return res.status(404).send({message: `El producto no existe`})
 
-        res.status(200).send({user})
+        res.status(200).send(user)
     })
 }
 
@@ -98,36 +98,15 @@ function getUsersList(req, res) {
 }
 //Sign In
 function signin (req, res) {
-  User.find({ email: req.body.email }, (err, user) => {
-      console.log(!user)
-      console.log(User.email)
+  User.findOne({ email: req.body.email }, (err, user) => {
       if (err) return res.status(500).send ({ message: err})
       if (user.length === 0) return res.status(404).send({ message: 'No existe el usuario'})
-      console.log(user.email)
-      res.user = user
-      res.status(200).send({
-          message: user,
-          //token: service.createToken(user)
-      })
-  })
-  /*  let userData = req.body
-  User.findOne({email: userData.email}, (error, user) => {
-    if (error) {
-      console.log(error)    
-    } else {
       if (!user) {
         res.status(401).send('Invalid Email')
-      } else 
-      if ( user.password !== userData.password) {
-        res.status(401).send('Invalid Password')
-      } else {
-        let payload = {subject: user._id}
-        let token = jwt.sign(payload, 'secretKey')
-        res.status(200).send({token})
       }
-    }
-  }) */
- 
+      if(user.password === req.body.password){res.status(200).send(user)}
+      else res.status(404).send({message: 'Contraseña incorrecta'})
+  })
 }   
 
 
