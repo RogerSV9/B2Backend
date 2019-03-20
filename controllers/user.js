@@ -78,15 +78,12 @@ function updateUser (req, res) {
 
 //Delete user
 function deleteUser (req, res) {
-    let userId = req.body._id
+    let id = req.params._id
  
-    User.findById(userId, (err, user) => {
-      if(err) res.status(500).send({message: `Error al borrar el producto: ${err}`})
+    User.findByIdAndRemove(id, (err, user) => {
+      if(err) res.status(500).send({message: `Error al eliminar el producto: ${err}`})
  
-      user.deleteUser(err => {
-        if(err) res.status(500).send({message: `Error al borrar el producto: ${err}`})
-        res.status(200).send({message: 'El producto ha sido eliminado'})
-      })
+      res.status(200).send({message: 'Usuario eliminado'})
     })
    };
 

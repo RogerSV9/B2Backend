@@ -3,6 +3,7 @@
 const User = require('../models/user')
 const Match = require('../models/match')
 
+//Create match
 function createMatch(req, res){
     console.log(req.body)
     let match = new Match()
