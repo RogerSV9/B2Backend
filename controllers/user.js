@@ -87,7 +87,15 @@ function deleteUser (req, res) {
     })
    };
 
+//usuario de la lista
+function getUsersList(req, res) {
+  User.find({}, (err, users) => {
+      if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
+      if (!users) return res.status(404).send({ message: `No existen productos` })
 
+      res.status(200).send(users);
+  })
+}
 //Sign In
 function signin (req, res) {
   User.find({ email: req.body.email }, (err, user) => {
@@ -95,13 +103,30 @@ function signin (req, res) {
       console.log(User.email)
       if (err) return res.status(500).send ({ message: err})
       if (user.length === 0) return res.status(404).send({ message: 'No existe el usuario'})
-
+      console.log(user.email)
       res.user = user
       res.status(200).send({
-          message: 'Te has logueado correctamente',
+          message: user,
           //token: service.createToken(user)
       })
   })
+  /*  let userData = req.body
+  User.findOne({email: userData.email}, (error, user) => {
+    if (error) {
+      console.log(error)    
+    } else {
+      if (!user) {
+        res.status(401).send('Invalid Email')
+      } else 
+      if ( user.password !== userData.password) {
+        res.status(401).send('Invalid Password')
+      } else {
+        let payload = {subject: user._id}
+        let token = jwt.sign(payload, 'secretKey')
+        res.status(200).send({token})
+      }
+    }
+  }) */
  
 }   
 
@@ -113,5 +138,6 @@ module.exports = {
     getUser2,
     updateUser,
     deleteUser,
-    signin    
+    signin,
+    getUsersList    
 }

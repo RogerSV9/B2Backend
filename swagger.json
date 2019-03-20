@@ -74,6 +74,24 @@
       },
 
 
+      "/listusers": {
+        "get": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Returns all users in the database",
+            "responses": {
+                "200": {
+                    "description": "Returns the list of users",
+                    "schema": {
+                        "type": "array",
+                        "$ref": "#/definitions/Users"
+                    }
+                }
+            }
+        }
+    },
+    
       "/users/{userId}": {
         "parameters": [
           {
