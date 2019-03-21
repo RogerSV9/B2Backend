@@ -7,7 +7,7 @@ const api = express.Router()
 
 //User functions routes
 api.get('/users', userCtrl.getUsers)
-//api.get('/users', userCtrl.getUser1)
+api.get('/users/:username', userCtrl.getUser1)
 api.get('/users/:_id', userCtrl.getUser2)
 api.post('/users', userCtrl.createUser)
 api.put('/users/:_id', userCtrl.updateUser)

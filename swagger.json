@@ -73,6 +73,32 @@
         }
       },
 
+
+      "/users/{username}": {
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "Username of user that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get user with given username",
+          "responses": {
+            "200": {
+              "description": "User is found",
+              "schema": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          }
+        }
+      },
     
       "/users/{userId}": {
         "parameters": [
@@ -123,7 +149,7 @@
               "in": "body",
               "description": "User with new values of properties",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/GetUser"
               }
             }
           ],
@@ -131,7 +157,7 @@
             "200": {
               "description": "User is updated",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/GetUser"
               }
             }
           }

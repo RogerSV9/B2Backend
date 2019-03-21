@@ -44,10 +44,11 @@ function getUsers(req, res){
 //Get one user by username
 function getUser1 (req, res){
     let username = req.params.username
+    console.log(username)
 
-    User.findOne(username, (err, user) =>{
+    User.findOne({name: username}, (err, user) =>{
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
-        if(!user) return res.status(404).send({message: `El producto no existe`})
+        if(!user) return res.status(404).send({message: `No existe el ususario`})
 
         res.status(200).send(user)
     })
