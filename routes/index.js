@@ -18,7 +18,7 @@ api.get('/users/:username', UserCtrl.getUserbyusername)
 api.get('/users/:_id', UserCtrl.getUserbyid)
 
 //PUT
-api.put('/users/:_id', UserCtrl.updateUser)
+api.put('/users', UserCtrl.updateUser)
 
 //DELETE
 api.delete('/users/:_id', UserCtrl.deleteUser)
