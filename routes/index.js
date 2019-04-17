@@ -1,22 +1,37 @@
 'use strict'
 
 const express = require('express')
-const userCtrl = require('../controllers/user')
-const matchCtrl = require('../controllers/match')
+const UserCtrl = require('../controllers/user')
+const MatchCtrl = require('../controllers/match')
 const api = express.Router()
 
-//User functions routes
-api.get('/users', userCtrl.getUsers)
-api.get('/users/:username', userCtrl.getUser1)
-api.get('/users/:_id', userCtrl.getUser2)
-api.post('/users', userCtrl.createUser)
-api.put('/users/:_id', userCtrl.updateUser)
-api.delete('/users/:_id', userCtrl.deleteUser)
-api.post('/signin', userCtrl.signin)
+//USER ROUTES
+
+//POST
+api.post('/users', UserCtrl.postUser)
+api.post('/signin', UserCtrl.signIn)
+api.post('')
+
+//GET
+api.get('/users', UserCtrl.getUsers)
+api.get('/users/:username', UserCtrl.getUserbyusername)
+api.get('/users/:_id', UserCtrl.getUserbyid)
+
+//PUT
+api.put('/users/:_id', UserCtrl.updateUser)
+
+//DELETE
+api.delete('/users/:_id', UserCtrl.deleteUser)
 
 
-//Matches routes
-api.get('/matches', matchCtrl.getMatches)
-api.post('/matches', matchCtrl.createMatch)
+
+//MATCH ROUTES
+
+//POST
+api.post('/matches', MatchCtrl.postMatch)
+
+//GET
+api.get('/matches', MatchCtrl.getMatches)
+
 
 module.exports = api

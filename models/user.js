@@ -5,18 +5,18 @@ const moment = require('moment')
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
-    name: String,
-    surname: String,
-    username: { type: String, unique:true},
-    password: { type: String},
-    email: { type: String, unique:true, lowercase: true},
+    name: {type: String, required: true},
+    surname: {type: String},
+    username: { type: String, unique:true, required: true},
+    password: {type: String, required: true},
+    email: { type: String, unique:true, lowercase: true, required: true},
+    age: {type: String},
     signUpDate: { type: Date, default: Date.now()},
     lastLogin: { type: Date, default: Date.now()},
-    age: String,
     picture: String,
     description: String,
     localization: String,
-    premium: Boolean,
+    category: {type: String, enum: ['user', 'premium', 'admin']},
     tag: [],
     matches: [{
         type: Schema.Types.ObjectId,

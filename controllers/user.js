@@ -2,113 +2,173 @@
 
 const User = require('../models/user')
 
+const UserCtrl = {}
 
-//Create user
-function createUser(req, res){
-    console.log(req.body)
-    let user = new User()
-    user.name = req.body.name
-    user.surname = req.body.surname
-    user.username = req.body.username
-    user.password = req.body.password
-    user.email = req.body.email
-    user.signUpDate = req.body.signUpDate
-    user.lastLogin = req.body.lastLogin
-    user.age = req.body.age
-    user.picture = req.body.picture
-    user.description = req.body.description
-    user.localization = req.body.localization
-    user.premium = req.body.premium
-    user.tag = req.body.tag
 
-    user.save((err, userStored) => {
-        if(err) res.status(500).send({message: `Error al salvar en la base de datos: ${err}`})
+//Register
+UserCtrl.postUser = async (req, res) => {
+  const user = new User()
+  console.log(user)
+  
+  user.name = req.body.name
+  user.username = req.body.username
+  user.email = req.body.email
+  user.password = req.body.password
 
-        res.status(200).send({user: userStored})
-    })
+  try {
+    await user.save();
+    res.status(200).send({message: "User created successfully"})
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
+  }
 }
-
 
 
 //Get all users
-function getUsers(req, res){
-    User.find({}, (err, users)=>{
-        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
-        if(!users) return res.status(404).send({message: `No existen productos`})
-        
-        res.status(200).send(users)
-    })
+UserCtrl.getUsers = async (req, res) => {
+  const allusers = await User.find()
+  res.json(allusers)
 }
+
 
 
 //Get one user by username
-function getUser1 (req, res){
-    let username = req.params.username
-    console.log(username)
-
-    User.findOne({name: username}, (err, user) =>{
-        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
-        if(!user) return res.status(404).send({message: `No existe el ususario`})
-
-        res.status(200).send(user)
-    })
+UserCtrl.getUserbyusername = async (req, res) => {
+  try {
+    let user = await User.findOne(req.body.username)
+    if (!user) {
+      return res.status(404).send({message: 'User not found'})
+    } else {
+      res.json(user)
+    }
+  }catch (err) {
+    res.status(500).send(err)
+  }
 }
 
-
 //Get one user by ID
-function getUser2 (req, res) {
-    let id = req.params._id
-      User.findById(id, (err, user)=>{
-        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
-        if(!user) return res.status(404).send({message: `No existe él ususario`})
-  
-        res.status(200).send(user)
-      })
+UserCtrl.getUserbyid = async (req, res) => {
+  try {
+  console.log(req.params.id)
+  const user = await User.findById(req.params.id)
+  if (!user) {
+    return res.status(404).send({message: 'User not found'})
+    }else {
+    res.json(user)
     }
-
+  }catch (err) {
+  res.status(500).send(err)
+  }
+}
 
 
 //Update user
-function updateUser (req, res) {
-    User.findOneAndUpdate(req.body._id, req.body, {new: true}, function (err, user) {
-      if(err) console.log(err)
-      res.status(200).send(user)
-    });
-  };
+UserCtrl.updateUser = async (req, res) => {
+  try {
+    const _id = req.params.userId
+    let user = await User.findByIdAndUpdate(_id, req.body, {runValidators:true})
+    if(!user){
+      return res.status(400).send({message: 'User not found'})
+    }else{
+      res.status(200).send(user)    
+      }
+   }catch(err){
+    if (err.name === 'MongoError' && err.code === 11000) {
+      res.status(409).send({err: err.message, code: err.code})
+      }
+    res.status(500).send(err)
+    }
+  }
 
 
 //Delete user
-function deleteUser (req, res) {
-    let id = req.params._id
- 
-    User.findByIdAndRemove(id, (err, user) => {
-      if(err) res.status(500).send({message: `Error al eliminar el producto: ${err}`})
- 
-      res.status(200).send({message: 'Usuario eliminado'})
-    })
-   };
+UserCtrl.deleteUser = async (req, res) => {
+  try {
+    const _id = mongoose.Types.ObjectId(req.params.userId)
 
-
-//Sign In
-function signin (req, res) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-      if (err) return res.status(500).send ({ message: err})
-      if (user.length === 0) return res.status(404).send({ message: 'No existe el usuario'})
-      if (!user) {
-        res.status(401).send('Invalid Email')
-      }
-      if(user.password === req.body.password){res.status(200).send(user)}
-      else res.status(404).send({message: 'Contraseña incorrecta'})
-  })
-}   
-
-
-module.exports = {
-    createUser,
-    getUsers,
-    getUser1,
-    getUser2,
-    updateUser,
-    deleteUser,
-    signin    
+    let user = await User.findByIdandDelete(_id)
+    if (!user) {
+      return res.status(404).send({message: 'User not found'})
+    } else {            
+      res.status(200).send({message: 'User deleted succesfully'})
+    }
+  } catch (err) {
+    res.status(500).send(err)
+  }
 }
+
+
+//Add match to a user
+UserCtrl.addMatch = async (req, res) => {
+  try {
+    const userSourceId = req.body.userSourceId
+    const userDestId = req.body.userDestId
+
+    console.log(`userSourceId: ${userSourceId}, userDestId: ${userDestId}`)
+
+    let userDestFound = await User.findById(userDestId)
+
+    if (!userDestFound) {
+      return res.status(404).send({message: 'Destination user not found'})
+    } else {
+      let matchUpdated = await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {users: userDestId}})
+      if (!matchUpdated) {
+        return res.status(404).send({message: 'Source user not found'})
+      }
+    }
+
+  } catch (err) {
+
+  }
+}
+
+
+
+//Login
+UserCtrl.signIn = async (req, res) => {
+ try {
+   console.log(req.params.username)
+   let username = await User.findOne(req.params.username)   
+   console.log(username)
+   if (!username) {
+     return res.status(404).send({message: 'Invalid username'})
+   } else if (user.length === 0) {
+     return res.status(401).send({message: 'Insert a username'})
+   }  
+   console.log(req.body.password)
+   console.log(user.password)
+   if(user.password === req.body.password){
+     res.status(200).send(user)
+  } else {
+     res.status(404).send({message: 'Incorrect password'})
+   }
+ }catch (err) {
+  res.status(500).send(err)
+ }
+}
+
+
+/* //Register
+UserCtrl.register = async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    username: req.body.username,
+    email: req.body.email, 
+    password: req.body.password
+  })
+
+  try {
+    await user.save()
+    res.status(200).send({message: 'User registered succesfully'})
+  } catch (err) {
+    res.status(500).send(err)
+    console.log(err)
+  }
+
+  console.log(user)
+}
+ */
+
+
+module.exports = UserCtrl

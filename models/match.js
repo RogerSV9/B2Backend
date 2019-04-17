@@ -6,13 +6,8 @@ const Schema = mongoose.Schema
 
 
 const MatchSchema = new Schema({
-        username1: String,
-        confirmed: Boolean,
-        matchDate: {type: Date, default: Date.now()},
-        /*username2: {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
-        }*/
+        username: String,
+        matchDate: {type: Date, default: Date.now()}
 })
 
 module.exports = mongoose.model('Match', MatchSchema)
