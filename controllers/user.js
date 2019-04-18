@@ -49,9 +49,10 @@ UserCtrl.getUserbyusername = async (req, res) => {
 
 //Get one user by ID
 UserCtrl.getUserbyid = async (req, res) => {
+  console.log("entra")
   try {
-  console.log(req.params.id)
-  const user = await User.findById(req.params.id)
+  console.log(req.params._id)
+  const user = await User.findById(req.params._id)
   if (!user) {
     return res.status(404).send({message: 'User not found'})
     }else {

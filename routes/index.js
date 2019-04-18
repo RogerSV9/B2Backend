@@ -15,7 +15,7 @@ api.post('')
 //GET
 api.get('/users', UserCtrl.getUsers)
 api.get('/users/:username', UserCtrl.getUserbyusername)
-api.get('/users/:_id', UserCtrl.getUserbyid)
+api.get('/users/info/:_id', UserCtrl.getUserbyid)
 
 //PUT
 api.put('/users', UserCtrl.updateUser)
