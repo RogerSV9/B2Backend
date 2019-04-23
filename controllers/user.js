@@ -147,7 +147,7 @@ UserCtrl.signIn = async (req, res) => {
       if(user.password === req.body.password){res.status(200).send(user)}
       else res.status(404).send({message: 'Contraseña incorrecta'})
   }) */
- try {
+ /* try {
    console.log("Params " +req.params.username)
    console.log("Body " +req.body.username)
    console.log("Params " +req.params.password)
@@ -178,6 +178,42 @@ UserCtrl.signIn = async (req, res) => {
   console.log("500")
   res.status(500).send(err)
  }
+} */
+try {
+  console.log("Params " +req.params.username)
+  console.log("Body " +req.body.username)
+  console.log("Params " +req.params.password)
+  console.log("Body " +req.body.password)
+  let username1 = req.body.username;
+  console.log("username1 " + username1)
+  let username = await User.findOne({ username: req.body.username })   
+  console.log("username" +username)
+  console.log("username2" +username.username)
+  if (!username) {
+    console.log("if")
+    return res.status(404).send({message: 'Invalid username'})
+  } else if (username.length === 0) {
+   console.log("else if")
+    return res.status(401).send({message: 'Insert a username'})
+  }  
+  console.log("Req.body" +req.body.password)
+  console.log("Username" +username.password)
+  if(username.password === req.body.password && username.category=== "admin"){
+   console.log("if2")
+    res.status(200).send(username)
+    console.log("if3")
+ }
+ else if(username.category != "admin"){
+  res.status(401).send({message: 'Unauthorized'})
+ }
+  else {
+   console.log("else")
+    res.status(404).send({message: 'Incorrect password'})
+  }
+}catch (err) {
+ console.log("500")
+ res.status(500).send(err)
+}
 }
 
 
