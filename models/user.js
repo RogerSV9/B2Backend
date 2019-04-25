@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     picture: String,
     description: String,
     localization: String,
-    category: {type: String, enum: ['user', 'premium', 'admin']},
+    category: {type: String, enum: ['user', 'premium', 'admin'], default: 'user'},
     tag: [],
     matches: [{
         type: Schema.Types.ObjectId,

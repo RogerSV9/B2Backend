@@ -10,12 +10,13 @@ const api = express.Router()
 //POST
 api.post('/users', UserCtrl.postUser)
 api.post('/signin', UserCtrl.signIn)
-api.post('')
+api.post('/postmatch', UserCtrl.addMatch)
 
 //GET
 api.get('/users', UserCtrl.getUsers)
 api.get('/users/:username', UserCtrl.getUserbyusername)
 api.get('/users/info/:_id', UserCtrl.getUserbyid)
+api.get('/getmatches', UserCtrl.getMatchbyid)
 
 //PUT
 api.put('/users', UserCtrl.updateUser)

@@ -6,19 +6,18 @@ const Match = require('../models/match')
 const MatchCtrl = {}
 
 //Create match
-MatchCtrl.postMatch = async (req, res) => {
+MatchCtrl.postMatch = function (username) {
     const match = new Match()
     console.log(match)
     
-    match.username = req.body.username
-    match.confirmed = req.body.confirmed
-    match.matchDate = req.body.matchDate
+    match.username = username
   
     try {
-      await user.save();
-      res.status(200).send({message: "Match created successfully"})
+      match.save();
+      return match;
+      //res.status(200).send({message: "Match created successfully"})
     } catch (err) {
-      res.status(500).send(err);
+      //res.status(500).send(err);
       console.log(err);
     }
   }
