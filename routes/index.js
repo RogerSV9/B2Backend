@@ -3,13 +3,14 @@
 const express = require('express')
 const UserCtrl = require('../controllers/user')
 const MatchCtrl = require('../controllers/match')
+const auth = require('../middlewares/auth')
 const api = express.Router()
 
 //USER ROUTES
 
 //POST
-api.post('/users', UserCtrl.postUser)
-api.post('/signin', UserCtrl.signIn)
+api.post('/register', UserCtrl.postUser)
+api.post('/login', UserCtrl.signIn)
 api.post('/postmatch', UserCtrl.addMatch)
 
 //GET
@@ -18,15 +19,15 @@ api.get('/users/:username', UserCtrl.getUserbyusername)
 api.get('/users/info/:_id', UserCtrl.getUserbyid)
 api.get('/getmatches', UserCtrl.getMatchbyid)
 
+api.get('/private', auth, (req,res) => {
+    res.status(200).send({message: 'Tienes acceso'})
+})
+
 //PUT
 api.put('/users', UserCtrl.updateUser)
 
 //DELETE
 api.delete('/users/:_id', UserCtrl.deleteUser)
-
-
-
-//MATCH ROUTES
 
 //POST
 api.post('/matches', MatchCtrl.postMatch)

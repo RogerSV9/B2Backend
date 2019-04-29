@@ -1,8 +1,8 @@
 'use strict'
 
 const User = require('../models/user')
-const Match = require('../models/match')
 const MatchCtrl = require('../controllers/match')
+const service = require('../services')
 
 const UserCtrl = {}
 
@@ -19,11 +19,14 @@ UserCtrl.postUser = async (req, res) => {
 
   try {
     await user.save();
-    res.status(200).send({message: "User created successfully"})
+    return res.status(201).send({ 
+      token: service.createToken(user) 
+    })
   } catch (err) {
     res.status(500).send(err);
     console.log(err);
   }
+  console.log(service.createToken(user))
 }
 
 
@@ -32,8 +35,6 @@ UserCtrl.getUsers = async (req, res) => {
   const allusers = await User.find()
   res.json(allusers)
 }
-
-
 
 //Get one user by username
 UserCtrl.getUserbyusername = async (req, res) => {
@@ -183,8 +184,8 @@ try {
     return res.status(401).send({message: 'Insert a username'})
   }  
   if(username.password === req.body.password && username.category=== "admin"){
-    res.status(200).send(username)
- }
+    res.status(200).send({token: service.createToken(user)})
+  }
  else if(username.category != "admin"){
   res.status(401).send({message: 'Unauthorized'})
  }
