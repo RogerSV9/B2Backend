@@ -11,6 +11,7 @@ const api = express.Router()
 api.post('/users', UserCtrl.postUser)
 api.post('/signin', UserCtrl.signIn)
 api.post('/postmatch', UserCtrl.addMatch)
+api.post('/acceptmatch', UserCtrl.acceptMatch)
 
 //GET
 api.get('/users', UserCtrl.getUsers)

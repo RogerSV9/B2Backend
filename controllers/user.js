@@ -125,6 +125,41 @@ UserCtrl.addMatch = async (req, res) => {
   }
 }
 
+//Accept a match from a user
+UserCtrl.acceptMatch = async (req, res) => {
+  try {
+    const userSourceId = req.body.userSourceId
+    const userDestId = req.body.userDestId
+
+    console.log(`userSourceId: ${userSourceId}, userDestId: ${userDestId}`)
+
+    let userDestFound = await User.findById(userDestId)
+    let userSourceFound = await User.findById(userSourceId)
+    let userDestmatch = await User.findById(userDestId).populate('matches')
+    console.log(userDestmatch.matches)
+    let matches = userDestmatch.matches
+    matches.forEach(function (value) {
+      if(value.username === userSourceFound.username){
+        let updatedmatch = MatchCtrl.updateMatch(value._id);
+        console.log("UpdatedMatch",updatedmatch)
+      }
+    });
+    //let match = MatchCtrl.postMatch(userDestFound.username)
+
+    if (!userDestFound) {
+      return res.status(404).send({message: 'Destination user not found'})
+    } else {
+      let matchUpdated = await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
+      if (!matchUpdated) {
+        return res.status(404).send({message: 'Source user not found'})
+      }
+      res.status(200).send(userDestmatch)
+    }
+  } catch (err) {
+
+  }
+}
+
 //Get the matches from a user by ID
 UserCtrl.getMatchbyid = async (req, res) => {
   try {
