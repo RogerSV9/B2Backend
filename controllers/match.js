@@ -6,11 +6,12 @@ const Match = require('../models/match')
 const MatchCtrl = {}
 
 //Create match
-MatchCtrl.postMatch = function (username) {
+MatchCtrl.postMatch = function (username, confirmed) {
     const match = new Match()
     console.log(match)
     
     match.username = username
+    match.confirmed = confirmed
   
     try {
       match.save();
@@ -29,16 +30,8 @@ MatchCtrl.getMatches = async (req, res) => {
   }
 //Update a match
 MatchCtrl.updateMatch = async function (id) {
-  let variable
   try {
-    console.log("ONE -- UPDATE MATCH!!!!", id);
-    Match.findOneAndUpdate({_id: id}, {$set: {confirmed: true}}, function (err, doc) {
-      if (err) console.log("err", err);
-      
-      console.log("DOC", doc);
-      variable = doc
-    });
-    return variable
+    await Match.findOneAndUpdate({_id: id}, {$set: {confirmed: true}})
     //res.status(200).send({message: "Match created successfully"})
   } catch (err) {
     //res.status(500).send(err);
