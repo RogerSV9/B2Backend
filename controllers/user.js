@@ -16,6 +16,7 @@ UserCtrl.postUser = async (req, res) => {
   user.username = req.body.username
   user.email = req.body.email
   user.password = req.body.password
+  user.category = req.body.category
 
   try {
     await user.save();
@@ -140,60 +141,53 @@ UserCtrl.getMatchbyid = async (req, res) => {
   }
 }
 
+//Login USER
+UserCtrl.signInUser = async (req, res) => {
+  try {
+    let username = await User.findOne({ username: req.body.username })   
+    console.log(username)
+    if (!username) {
+      return res.status(404).send({message: 'Invalid username'})
+    } else if (username.length === 0) {
+      return res.status(401).send({message: 'Insert a username'})
+    }  
+    if(username.password === req.body.password){
+      res.status(200).send({token: service.createToken(username)})
+    }
+    else {
+      res.status(404).send({message: 'Incorrect password'})
+    }
+  }catch (err) {
+   res.status(500).send(err)
+  }
+}
 
-//Login
-UserCtrl.signIn = async (req, res) => {
- /* try {
-   console.log("Params " +req.params.username)
-   console.log("Body " +req.body.username)
-   console.log("Params " +req.params.password)
-   console.log("Body " +req.body.password)
-   let username1 = req.body.username;
-   console.log("username1 " + username1)
-   let username = await User.findOne({ username: req.body.username })   
-   console.log("username" +username)
-   console.log("username2" +username.username)
-   if (!username) {
-     console.log("if")
-     return res.status(404).send({message: 'Invalid username'})
-   } else if (username.length === 0) {
-    console.log("else if")
-     return res.status(401).send({message: 'Insert a username'})
-   }  
-   console.log("Req.body" +req.body.password)
-   console.log("Username" +username.password)
-   if(username.password === req.body.password){
-    console.log("if2")
-     res.status(200).send(username)
-     console.log("if3")
-  } else {
-    console.log("else")
-     res.status(404).send({message: 'Incorrect password'})
-   }
- }catch (err) {
-  console.log("500")
-  res.status(500).send(err)
- }
-} */
+
+
+//Login ADMIN
+UserCtrl.signInAdmin = async (req, res) => {
 try {
-  let username1 = req.body.username;
   let username = await User.findOne({ username: req.body.username })   
+  console.log(username)
   if (!username) {
     return res.status(404).send({message: 'Invalid username'})
   } else if (username.length === 0) {
     return res.status(401).send({message: 'Insert a username'})
   }  
   if(username.password === req.body.password && username.category=== "admin"){
-    res.status(200).send({token: service.createToken(user)})
+    res.status(200).send({token: service.createToken(username)})
+    console.log(token)
   }
  else if(username.category != "admin"){
   res.status(401).send({message: 'Unauthorized'})
+  console.log('Unathorized')
  }
   else {
     res.status(404).send({message: 'Incorrect password'})
   }
 }catch (err) {
  res.status(500).send(err)
+ console.log(err)
 }
 }
 
