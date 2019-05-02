@@ -113,6 +113,7 @@ UserCtrl.addMatch = async function (userSourceId, userDestId, confirmed) {
 
     if(confirmed === true){
       let match = MatchCtrl.postMatch(userDestFound.username, true)
+      await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
     }
     else if(confirmed === false){
       let match = MatchCtrl.postMatch(userDestFound.username, false)
