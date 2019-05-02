@@ -103,7 +103,40 @@ UserCtrl.deleteUser = async (req, res) => {
 
 
 //Add match to a user
-UserCtrl.addMatch = async (req, res) => {
+UserCtrl.addMatch = async function (userSourceId, userDestId, confirmed) {
+  try {
+    //const userSourceId = req.body.userSourceId
+    //const userDestId = req.body.userDestId
+
+    console.log(`userSourceId: ${userSourceId}, userDestId: ${userDestId}`)
+
+    let userDestFound = await User.findById(userDestId)
+
+    if(confirmed === true){
+      let match = MatchCtrl.postMatch(userDestFound.username, true)
+      await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
+    }
+    else if(confirmed === false){
+      let match = MatchCtrl.postMatch(userDestFound.username, false)
+      await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
+    }
+
+    if (!userDestFound) {
+      //return res.status(404).send({message: 'Destination user not found'})
+    } else {
+      //let matchUpdated = await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
+      if (!matchUpdated) {
+        //return res.status(404).send({message: 'Source user not found'})
+      }
+      //res.status(200).send(match)
+    }
+  } catch (err) {
+
+  }
+}
+
+//Accept a match from a user
+UserCtrl.acceptMatch = async (req, res) => {
   try {
     const userSourceId = req.body.userSourceId
     const userDestId = req.body.userDestId
@@ -111,19 +144,36 @@ UserCtrl.addMatch = async (req, res) => {
     console.log(`userSourceId: ${userSourceId}, userDestId: ${userDestId}`)
 
     let userDestFound = await User.findById(userDestId)
-    let match = MatchCtrl.postMatch(userDestFound.username)
+    let userSourceFound = await User.findById(userSourceId)
+    let userDestmatch = await User.findById(userDestId).populate('matches')
+    let matches = userDestmatch.matches
+    let found = false
+    matches.forEach(function (value) {
+      if(value.username === userSourceFound.username){
+        MatchCtrl.updateMatch(value._id)
+        found = true
+      }
+    });
+    if(found === false){
+      await UserCtrl.addMatch(userSourceId, userDestId, false)
+    }
+    else if(found === true){
+      await UserCtrl.addMatch(userSourceId, userDestId, true)
+    }
+let user = await User.findById(userDestId).populate('matches')
+console.log("USER: "+user)
+res.status(200).send(user)
 
-    if (!userDestFound) {
+    /*if (!userDestFound) {
       return res.status(404).send({message: 'Destination user not found'})
     } else {
       let matchUpdated = await User.findByIdAndUpdate({_id: userSourceId}, {$addToSet: {matches: match._id}})
       if (!matchUpdated) {
         return res.status(404).send({message: 'Source user not found'})
       }
-      res.status(200).send(match)
-    }
+    }*/
   } catch (err) {
-
+      return res.status(500).send(err)
   }
 }
 
