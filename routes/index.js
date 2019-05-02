@@ -3,6 +3,7 @@
 const express = require('express')
 const UserCtrl = require('../controllers/user')
 const MatchCtrl = require('../controllers/match')
+const ImageCtrl = require('../controllers/image')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
@@ -13,6 +14,7 @@ api.post('/register', UserCtrl.postUser)
 api.post('/login', UserCtrl.signIn)
 api.post('/postmatch', UserCtrl.addMatch)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
+api.post('/uploadimage', ImageCtrl.uploadimage)
 
 //GET
 api.get('/users', UserCtrl.getUsers)
