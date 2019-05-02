@@ -11,32 +11,34 @@ const api = express.Router()
 
 //POST
 api.post('/register', UserCtrl.postUser)
+api.post('/signInUser', UserCtrl.signInUser)
+api.post('/signInAdmin', UserCtrl.signInAdmin)
+api.post('/postmatch', auth, UserCtrl.addMatch)
 api.post('/login', UserCtrl.signIn)
-api.post('/postmatch', UserCtrl.addMatch)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage', ImageCtrl.uploadimage)
 
 //GET
-api.get('/users', UserCtrl.getUsers)
-api.get('/users/:username', UserCtrl.getUserbyusername)
-api.get('/users/info/:_id', UserCtrl.getUserbyid)
-api.get('/getmatches', UserCtrl.getMatchbyid)
+api.get('/users', auth, UserCtrl.getUsers)
+api.get('/users/:username', auth, UserCtrl.getUserbyusername)
+api.get('/users/info/:_id', auth, UserCtrl.getUserbyid)
+api.get('/getmatches', auth, UserCtrl.getMatchbyid)
 
 api.get('/private', auth, (req,res) => {
     res.status(200).send({message: 'Tienes acceso'})
 })
 
 //PUT
-api.put('/users', UserCtrl.updateUser)
+api.put('/users', auth, UserCtrl.updateUser)
 
 //DELETE
-api.delete('/users/:_id', UserCtrl.deleteUser)
+api.delete('/users/:_id', auth, UserCtrl.deleteUser)
 
 //POST
-api.post('/matches', MatchCtrl.postMatch)
+api.post('/matches', auth, MatchCtrl.postMatch)
 
 //GET
-api.get('/matches', MatchCtrl.getMatches)
+api.get('/matches', auth, MatchCtrl.getMatches)
 
 
 module.exports = api
