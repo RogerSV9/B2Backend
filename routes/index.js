@@ -14,14 +14,14 @@ api.post('/register', UserCtrl.postUser)
 api.post('/signInUser', UserCtrl.signInUser)
 api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
-api.post('/login', UserCtrl.signIn)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage', ImageCtrl.uploadimage)
+api.post('/passid', ImageCtrl.passid)
 
 //GET
 api.get('/users', auth, UserCtrl.getUsers)
 api.get('/users/:username', auth, UserCtrl.getUserbyusername)
-api.get('/users/info/:_id', auth, UserCtrl.getUserbyid)
+api.get('/users/info/:_id', UserCtrl.getUserbyid)
 api.get('/getmatches', auth, UserCtrl.getMatchbyid)
 
 api.get('/private', auth, (req,res) => {

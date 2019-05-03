@@ -3,6 +3,7 @@
 const UserCtrl = require('../controllers/user')
 var multer = require('multer');
 var cloudinary = require('cloudinary')
+var fs = require('fs');
 
 cloudinary.config({
     cloud_name: 'dg7ybkbb8',
@@ -13,6 +14,7 @@ cloudinary.config({
 const ImageCtrl = {}
 
 let url = ""
+let id = ""
 const pwd = process.cwd();
 
 var Storage = multer.diskStorage({
@@ -44,10 +46,16 @@ async function uploadimagecloud(url){
     console.log("URL",url)
     cloudinary.v2.uploader.upload(url, function(error, result) {
         console.log(result, error)
-        let id = "5caf128799d1b20ba9d761e2"
         UserCtrl.updateImage(result.url,id)
+        fs.unlink(url, function(error){
+            if(error)console.log(error)
+        })
     });
 
+}
+
+ImageCtrl.passid = async (req, res) => {
+    id = req.body.id
 }
 
 module.exports = ImageCtrl
