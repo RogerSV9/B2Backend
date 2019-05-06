@@ -43,9 +43,10 @@ ImageCtrl.uploadimage = async (req, res) => {
 };
 
 async function uploadimagecloud(url){
-    console.log("URL",url)
     cloudinary.v2.uploader.upload(url, function(error, result) {
         console.log(result, error)
+        console.log("ID", id)
+        id = "5caf128799d1b20ba9d761e2"
         UserCtrl.updateImage(result.url,id)
         fs.unlink(url, function(error){
             if(error)console.log(error)
@@ -55,7 +56,8 @@ async function uploadimagecloud(url){
 }
 
 ImageCtrl.passid = async (req, res) => {
-    id = req.body.id
+   id = req.body.id
+   res.status(200).send(id)
 }
 
 module.exports = ImageCtrl

@@ -180,12 +180,9 @@ res.status(200).send(user)
 //Update image from a user
 UserCtrl.updateImage = async function (url, id) {
   try {
-    let user = await User.findByIdAndUpdate(id, {picture: url}, {runValidators:true})
-    if(!user){
-      //return res.status(400).send({message: 'User not found'})
-    }else{
-      //res.status(200).send(user)    
-      }
+    console.log(url)
+    console.log(id)
+    await User.findByIdAndUpdate(id, {picture: url}, {runValidators:true})
    }catch(err){
     if (err.name === 'MongoError' && err.code === 11000) {
       //res.status(409).send({err: err.message, code: err.code})
