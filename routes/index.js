@@ -10,15 +10,9 @@ const api = express.Router()
 
 //POST
 api.post('/register', UserCtrl.postUser)
-<<<<<<< HEAD
 api.post('/signInUser', UserCtrl.signInUser)
 api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
-=======
-api.post('/login', UserCtrl.signIn)
-api.post('/postmatch', UserCtrl.addMatch)
-api.post('/acceptmatch', UserCtrl.acceptMatch)
->>>>>>> 7e3e9f35b1fe42cd61f1c2c7a572a81fd3cb9ce4
 
 //GET
 api.get('/users', auth, UserCtrl.getUsers)

@@ -9,6 +9,10 @@ const UserCtrl = {}
 
 //Register
 UserCtrl.postUser = async (req, res) => {
+  console.log("name"+req.body.name)
+    console.log("username"+req.body.username)
+    console.log("email"+req.body.email)
+    console.log("password"+req.body.password)
   const user = new User()
   console.log(user)
   
@@ -16,9 +20,14 @@ UserCtrl.postUser = async (req, res) => {
   user.username = req.body.username
   user.email = req.body.email
   user.password = req.body.password
-  user.category = req.body.category
+  user.age = req.body.age
+  //user.category = req.body.category
 
   try {
+    console.log("name"+req.body.name)
+    console.log("username"+req.body.username)
+    console.log("email"+req.body.email)
+    console.log("password"+req.body.password)
     await user.save();
     return res.status(201).send({ 
       token: service.createToken(user) 
@@ -194,6 +203,8 @@ UserCtrl.getMatchbyid = async (req, res) => {
 //Login USER
 UserCtrl.signInUser = async (req, res) => {
   try {
+    console.log("username body:" +req.body.username)
+    console.log("pass body:" +req.body.password)
     let username = await User.findOne({ username: req.body.username })   
     console.log(username)
     if (!username) {
