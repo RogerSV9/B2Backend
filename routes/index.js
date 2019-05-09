@@ -3,6 +3,7 @@
 const express = require('express')
 const UserCtrl = require('../controllers/user')
 const MatchCtrl = require('../controllers/match')
+const ImageCtrl = require('../controllers/image')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
@@ -13,11 +14,17 @@ api.post('/register', UserCtrl.postUser)
 api.post('/signInUser', UserCtrl.signInUser)
 api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
+<<<<<<< HEAD
+=======
+api.post('/acceptmatch', UserCtrl.acceptMatch)
+api.post('/uploadimage', ImageCtrl.uploadimage)
+api.post('/passid', ImageCtrl.passid)
+>>>>>>> 7e1d2c7d5c58d34bb0765415d5e168d3103f8f3d
 
 //GET
 api.get('/users', auth, UserCtrl.getUsers)
 api.get('/users/:username', auth, UserCtrl.getUserbyusername)
-api.get('/users/info/:_id', auth, UserCtrl.getUserbyid)
+api.get('/users/info/:_id', UserCtrl.getUserbyid)
 api.get('/getmatches', auth, UserCtrl.getMatchbyid)
 
 api.get('/private', auth, (req,res) => {

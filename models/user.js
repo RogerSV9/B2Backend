@@ -1,7 +1,6 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const moment = require('moment')
 //Librería para encriptar la contraseña
 const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
@@ -36,9 +35,6 @@ const UserSchema = new Schema({
         }
     ]
 })
-
-let age = moment('2016-11-23').fromNow()
-console.log(age)
 
 //Función que se ejecuta antes de que se salve
 UserSchema.pre('save', (next) => {

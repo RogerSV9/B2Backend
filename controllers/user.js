@@ -186,6 +186,20 @@ res.status(200).send(user)
   }
 }
 
+//Update image from a user
+UserCtrl.updateImage = async function (url, id) {
+  try {
+    console.log(url)
+    console.log(id)
+    await User.findByIdAndUpdate(id, {picture: url}, {runValidators:true})
+   }catch(err){
+    if (err.name === 'MongoError' && err.code === 11000) {
+      //res.status(409).send({err: err.message, code: err.code})
+      }
+    //res.status(500).send(err)
+    }
+  }
+
 //Get the matches from a user by ID
 UserCtrl.getMatchbyid = async (req, res) => {
   try {
