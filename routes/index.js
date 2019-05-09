@@ -14,12 +14,9 @@ api.post('/register', UserCtrl.postUser)
 api.post('/signInUser', UserCtrl.signInUser)
 api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
-<<<<<<< HEAD
-=======
 api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage', ImageCtrl.uploadimage)
 api.post('/passid', ImageCtrl.passid)
->>>>>>> 7e1d2c7d5c58d34bb0765415d5e168d3103f8f3d
 
 //GET
 api.get('/users', auth, UserCtrl.getUsers)
