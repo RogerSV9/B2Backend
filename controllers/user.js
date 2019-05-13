@@ -266,4 +266,45 @@ try {
 }
 }
 
+UserCtrl.tags = async (req, res) => {
+  try{
+    let user = await User.findById(req.body._id)
+    let usertags = user.tag
+    let usermatches = await User.findById(req.body._id).populate('matches')
+    let userlist = await User.find({username: { $ne: user.username}})
+    let matchusers = new Array()
+    usertags.forEach(function(value){
+      userlist.forEach(function(value2){
+        let tags = value2.tag
+        tags.forEach(function(value3){
+          if(value === value3){
+            let found = false
+            matchusers.forEach(function(value4){
+              if(value2 === value4){
+                found = true
+              }
+            })
+            if(found === false){
+            matchusers.push(value2)}
+          }
+        })
+      })
+    })
+    /*for( var i = matchusers.length-1; i--;){
+      console.log("Hola1")
+      for(x in usermatches){
+        console.log("Hola2")
+      if ( matchusers[i].username === usermatches[x]){
+      matchusers.splice(i, 1);
+      console.log("Hola")
+      }
+      }
+    }*/
+    return res.status(200).send(matchusers)
+  }
+  catch (err){
+    return res.status(500).send(err)
+  }
+}
+
 module.exports = UserCtrl

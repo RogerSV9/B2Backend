@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     description: String,
     localization: String,
     category: {type: String, enum: ['user', 'premium', 'admin'], default: 'user'},
-    tag: [],
+    tag: [String],
     matches: [{
         type: Schema.Types.ObjectId,
         ref: 'Match'
