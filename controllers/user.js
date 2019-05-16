@@ -227,7 +227,7 @@ UserCtrl.signInUser = async (req, res) => {
       return res.status(401).send({message: 'Insert a username'})
     }  
     if(username.password === req.body.password){
-      res.status(200).send({token: service.createToken(username)})
+      res.status(200).send({token: service.createToken(username), username})
     }
     else {
       res.status(404).send({message: 'Incorrect password'})
@@ -268,6 +268,7 @@ try {
 
 UserCtrl.tags = async (req, res) => {
   try{
+    console.log(req.body._id)
     let user = await User.findById(req.body._id)
     let usertags = user.tag
     let usermatches = await User.findById(req.body._id).populate('matches')
@@ -300,6 +301,7 @@ UserCtrl.tags = async (req, res) => {
       }
       }
     }*/
+    console.log(matchusers)
     return res.status(200).send(matchusers)
   }
   catch (err){
