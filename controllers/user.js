@@ -291,16 +291,6 @@ UserCtrl.tags = async (req, res) => {
         })
       })
     })
-    /*for( var i = matchusers.length-1; i--;){
-      console.log("Hola1")
-      for(x in usermatches){
-        console.log("Hola2")
-      if ( matchusers[i].username === usermatches[x]){
-      matchusers.splice(i, 1);
-      console.log("Hola")
-      }
-      }
-    }*/
     console.log(matchusers)
     return res.status(200).send(matchusers)
   }

@@ -16,7 +16,6 @@ api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage', ImageCtrl.uploadimage)
-api.post('/passid', ImageCtrl.passid)
 api.post('/availablematches', UserCtrl.tags)
 
 //GET
