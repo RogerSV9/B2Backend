@@ -291,7 +291,7 @@ UserCtrl.tags = async (req, res) => {
         })
       })
     })
-    for( var i = matchusers.length-1; i--;){
+    for( var i = 0; i < matchusers.length; i++){
       usermatches.matches.forEach(function(x){
         if ( matchusers[i].username === x.username){
           matchusers.splice(i, 1);
