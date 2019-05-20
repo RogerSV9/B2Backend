@@ -268,10 +268,10 @@ try {
 
 UserCtrl.tags = async (req, res) => {
   try{
-    console.log(req.body._id)
     let user = await User.findById(req.body._id)
     let usertags = user.tag
     let usermatches = await User.findById(req.body._id).populate('matches')
+    console.log(usermatches)
     let userlist = await User.find({username: { $ne: user.username}})
     let matchusers = new Array()
     usertags.forEach(function(value){
@@ -291,6 +291,13 @@ UserCtrl.tags = async (req, res) => {
         })
       })
     })
+    for( var i = matchusers.length-1; i--;){
+      for(x in usermatches.matches){
+      if ( matchusers[i].username === x.username){
+      matchusers.splice(i, 1);
+      }
+      }
+    }
     console.log(matchusers)
     return res.status(200).send(matchusers)
   }
