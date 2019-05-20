@@ -292,13 +292,12 @@ UserCtrl.tags = async (req, res) => {
       })
     })
     for( var i = matchusers.length-1; i--;){
-      for(x in usermatches.matches){
-      if ( matchusers[i].username === x.username){
-      matchusers.splice(i, 1);
-      }
-      }
+      usermatches.matches.forEach(function(x){
+        if ( matchusers[i].username === x.username){
+          matchusers.splice(i, 1);
+          }
+      })
     }
-    console.log(matchusers)
     return res.status(200).send(matchusers)
   }
   catch (err){
