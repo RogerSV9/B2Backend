@@ -266,6 +266,7 @@ try {
 }
 }
 
+//Tags
 UserCtrl.tags = async (req, res) => {
   try{
     console.log(req.body._id)
