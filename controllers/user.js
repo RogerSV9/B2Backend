@@ -305,4 +305,17 @@ UserCtrl.tags = async (req, res) => {
   }
 }
 
+//Add a rating to a user
+UserCtrl.postrating = async function (req, res) {
+  try {
+
+    let id = req.body.id
+    let rating = req.body.rating
+    await User.findByIdAndUpdate({_id: id}, {$addToSet: {ratings: rating}})
+    res.status(200).send("Added")
+  } catch (err) {
+    res.status(500).send("Internal Server Error")
+  }
+}
+
 module.exports = UserCtrl

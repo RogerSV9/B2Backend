@@ -17,6 +17,7 @@ api.post('/postmatch', auth, UserCtrl.addMatch)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage/:id', ImageCtrl.uploadimage)
 api.post('/availablematches', UserCtrl.tags)
+api.post('/postrating', UserCtrl.postrating)
 
 //GET
 api.get('/users', auth, UserCtrl.getUsers)
