@@ -19,7 +19,7 @@ api.post('/availablematches', UserCtrl.tags)
 
 //ImageCtrl
 api.post('/uploadimage', ImageCtrl.uploadimage)
-api.post('/passid', ImageCtrl.passid)
+//api.post('/passid', ImageCtrl.passid)
 
 //EventCtrl
 api.post('/events', EventCtrl.postEvent)
@@ -38,13 +38,14 @@ api.get('/private', auth, (req,res) => {
 
 
 //EventCtrl
-api.get('/events', EventCtrl.getEvents)
+api.get('/events', auth, EventCtrl.getEvents)
 
 //PUT
 api.put('/users', auth, UserCtrl.updateUser)
 
 //DELETE
 api.delete('/users/:_id', auth, UserCtrl.deleteUser)
+api.delete('/events/:_id', auth, EventCtrl.deleteEvent)
 
 //POST
 api.post('/matches', auth, MatchCtrl.postMatch)

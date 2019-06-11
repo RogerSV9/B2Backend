@@ -13,4 +13,5 @@ if(err) {
     app.listen(config.port, () => {
         console.log(`API REST corriendo en http://localhost:${config.port}`)
     })
+   
 })

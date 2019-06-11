@@ -7,20 +7,26 @@ const EventCtrl = {}
 
 //Create event
 EventCtrl.postEvent = async (req,res) => {
-    console.log("name"+req.body.name)
-    console.log("date"+req.body.date)
-    console.log("place"+req.body.email)
-    console.log("description"+req.body.description)
+    console.log("hola")
+    console.log("name"+ req.body.name)
+    console.log("date"+ req.body.date)
+    console.log("location"+ req.body.location)
+    console.log("description"+ req.body.description)
 
     const event = new Event()
     console.log(event)
 
     event.name = req.body.name
     event.date = req.body.date
-    event.place = req.body.place
+    event.location = req.body.location
     event.description = req.body.description
 
-    res.json(event)
+    try {
+        await event.save()
+        return res.status(200).send(event)
+    } catch (err) {
+        res.status(500).send(err)
+    }
 }
 
 //Get all events
@@ -43,5 +49,6 @@ EventCtrl.deleteEvent = async (req,res) => {
             res.status(500).send(err)
           }
         }
+
 
         module.exports = EventCtrl
