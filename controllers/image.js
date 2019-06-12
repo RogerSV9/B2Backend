@@ -33,10 +33,8 @@ var upload = multer({
 }).array("imgUploader", 3); //Field name and max count
 
 ImageCtrl.uploadimage = async (req, res) => {
-    id = req.body.data
-    console.log("ID1",id)
-    let imagedata = req.body.formData
-    req.body = imagedata
+    id = req.params.id
+    console.log(id)
     upload(req, res, function(err) {
         //console.log(res)
         if (err) {
@@ -51,13 +49,11 @@ async function uploadimagecloud(url){
     cloudinary.v2.uploader.upload(url, function(error, result) {
         console.log(result, error)
         console.log("ID", id)
-        //id = "5caf128799d1b20ba9d761e2"
         UserCtrl.updateImage(result.url,id)
         fs.unlink(url, function(error){
             if(error)console.log(error)
         })
     });
-
 }
 
 module.exports = ImageCtrl

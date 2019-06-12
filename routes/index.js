@@ -15,7 +15,9 @@ api.post('/signInUser', UserCtrl.signInUser)
 api.post('/signInAdmin', UserCtrl.signInAdmin)
 api.post('/postmatch', auth, UserCtrl.addMatch)
 api.post('/acceptmatch', UserCtrl.acceptMatch)
+api.post('/uploadimage/:id', ImageCtrl.uploadimage)
 api.post('/availablematches', UserCtrl.tags)
+api.post('/postrating', UserCtrl.postrating)
 
 //ImageCtrl
 api.post('/uploadimage', ImageCtrl.uploadimage)

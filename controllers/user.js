@@ -292,7 +292,7 @@ UserCtrl.tags = async (req, res) => {
         })
       })
     })
-    for( var i = matchusers.length-1; i--;){
+    for( var i = 0; i < matchusers.length; i++){
       usermatches.matches.forEach(function(x){
         if ( matchusers[i].username === x.username){
           matchusers.splice(i, 1);
@@ -303,6 +303,19 @@ UserCtrl.tags = async (req, res) => {
   }
   catch (err){
     return res.status(500).send(err)
+  }
+}
+
+//Add a rating to a user
+UserCtrl.postrating = async function (req, res) {
+  try {
+
+    let id = req.body.id
+    let rating = req.body.rating
+    await User.findByIdAndUpdate({_id: id}, {$addToSet: {ratings: rating}})
+    res.status(200).send("Added")
+  } catch (err) {
+    res.status(500).send("Internal Server Error")
   }
 }
 

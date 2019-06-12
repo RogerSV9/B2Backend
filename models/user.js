@@ -25,15 +25,7 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Match'
     }],
-    ratings: [
-        {
-            numberOfStars: Number,
-            created: { 
-                type: Date,
-                default: Date.now
-            }
-        }
-    ]
+    ratings: [Number]
 })
 
 //Función que se ejecuta antes de que se salve
