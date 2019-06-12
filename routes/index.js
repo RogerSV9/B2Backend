@@ -40,7 +40,7 @@ api.get('/private', auth, (req,res) => {
 
 
 //EventCtrl
-api.get('/events', auth, EventCtrl.getEvents)
+api.get('/events', EventCtrl.getEvents)
 
 //PUT
 api.put('/users', auth, UserCtrl.updateUser)
