@@ -266,12 +266,13 @@ try {
 }
 }
 
+//Tags
 UserCtrl.tags = async (req, res) => {
   try{
-    console.log(req.body._id)
     let user = await User.findById(req.body._id)
     let usertags = user.tag
     let usermatches = await User.findById(req.body._id).populate('matches')
+    console.log(usermatches)
     let userlist = await User.find({username: { $ne: user.username}})
     let matchusers = new Array()
     usertags.forEach(function(value){
@@ -291,21 +292,30 @@ UserCtrl.tags = async (req, res) => {
         })
       })
     })
-    /*for( var i = matchusers.length-1; i--;){
-      console.log("Hola1")
-      for(x in usermatches){
-        console.log("Hola2")
-      if ( matchusers[i].username === usermatches[x]){
-      matchusers.splice(i, 1);
-      console.log("Hola")
-      }
-      }
-    }*/
-    console.log(matchusers)
+    for( var i = 0; i < matchusers.length; i++){
+      usermatches.matches.forEach(function(x){
+        if ( matchusers[i].username === x.username){
+          matchusers.splice(i, 1);
+          }
+      })
+    }
     return res.status(200).send(matchusers)
   }
   catch (err){
     return res.status(500).send(err)
+  }
+}
+
+//Add a rating to a user
+UserCtrl.postrating = async function (req, res) {
+  try {
+
+    let id = req.body.id
+    let rating = req.body.rating
+    await User.findByIdAndUpdate({_id: id}, {$addToSet: {ratings: rating}})
+    res.status(200).send("Added")
+  } catch (err) {
+    res.status(500).send("Internal Server Error")
   }
 }
 
