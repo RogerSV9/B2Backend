@@ -57,8 +57,8 @@ io.on('connection',function(socket){
     
             io.sockets.emit('user',send);//send to connected socket
     });
-    socket.on('chat',function(message, name, type, dest){//send messages
-        io.sockets.emit('chat',message, name,  type, dest);
-        console.log("Recibiendo y reenviando");
+    socket.on('chat',function(message,dest){//send messages
+        io.sockets.emit('chat',message, dest);
+        console.log("Recibiendo y reenviando" + message + dest);
     });
 });
