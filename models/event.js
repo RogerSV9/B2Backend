@@ -9,8 +9,7 @@ const EventSchema = new Schema({
         date: {type: Date, required: true},
         location: {type: String, required: true},
         description: String,
-        username: String,
-        participants: []
+        username: String
 })
 
 module.exports = mongoose.model('Event', EventSchema)

@@ -319,4 +319,31 @@ UserCtrl.postrating = async function (req, res) {
   }
 }
 
+//Add event to a user
+UserCtrl.postevent = async function (req, res) {
+  try {
+
+    let userid = req.body.userid
+    let eventid = req.body.eventid
+    await User.findByIdAndUpdate({_id: userid}, {$addToSet: {events: eventid}})
+    res.status(200).send("Added")
+  } catch (err) {
+    res.status(500).send("Internal Server Error")
+  }
+}
+
+//Get events of a user by ID
+UserCtrl.getUserevents = async (req, res) => {
+  try {
+  let user = await User.findById(req.body._id).populate('events')
+  if (!user) {
+    return res.status(404).send({message: 'User not found'})
+    }else {
+    res.json(user)
+    }
+  }catch (err) {
+  res.status(500).send(err)
+  }
+}
+
 module.exports = UserCtrl

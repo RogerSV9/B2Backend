@@ -18,6 +18,8 @@ api.post('/acceptmatch', UserCtrl.acceptMatch)
 api.post('/uploadimage/:id', ImageCtrl.uploadimage)
 api.post('/availablematches', UserCtrl.tags)
 api.post('/postrating', UserCtrl.postrating)
+api.post('/posteventuser', UserCtrl.postevent)
+api.post('/getuserevents', UserCtrl.getUserevents)
 
 //ImageCtrl
 api.post('/uploadimage', ImageCtrl.uploadimage)
