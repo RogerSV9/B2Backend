@@ -23,7 +23,6 @@ api.post('/getuserevents', UserCtrl.getUserevents)
 
 //ImageCtrl
 api.post('/uploadimage', ImageCtrl.uploadimage)
-//api.post('/passid', ImageCtrl.passid)
 
 //EventCtrl
 api.post('/events', EventCtrl.postEvent)
@@ -42,7 +41,7 @@ api.get('/private', auth, (req,res) => {
 
 
 //EventCtrl
-api.get('/events', EventCtrl.getEvents)
+
 
 //PUT
 api.put('/users', UserCtrl.updateUser)
@@ -53,6 +52,7 @@ api.delete('/events/:_id', auth, EventCtrl.deleteEvent)
 
 //POST
 api.post('/matches', auth, MatchCtrl.postMatch)
+api.post('/getevents', EventCtrl.getEvents)
 
 //GET
 api.get('/matches', auth, MatchCtrl.getMatches)
