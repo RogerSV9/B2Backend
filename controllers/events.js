@@ -29,10 +29,24 @@ EventCtrl.postEvent = async (req,res) => {
     }
 }
 
-//Get all events
+//Get all available events
 EventCtrl.getEvents = async (req,res) => {
-    const events = await Event.find()
-    res.json(events)
+    try{
+    let events = await Event.find()
+    console.log(events)
+    let userevents = await User.findById(req.body._id).populate('events')
+    for(var i=0; i< events.length; i++){
+        userevents.events.forEach(function(event){
+            if(event.name === events[i].name){
+                events.splice(i,1);
+            }
+        })
+    }
+    res.status(200).send(events)
+    }
+    catch (err){
+        return res.status(500).send(err)
+    }
 }
 
 //Delete event
