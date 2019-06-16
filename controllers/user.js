@@ -309,10 +309,13 @@ UserCtrl.tags = async (req, res) => {
 //Add a rating to a user
 UserCtrl.postrating = async function (req, res) {
   try {
-
+    console.log("Id: "+req.body.id)
+    console.log("Rating: "+req.body.rating)
     let id = req.body.id
     let rating = req.body.rating
-    await User.findByIdAndUpdate({_id: id}, {$addToSet: {ratings: rating}})
+    let user = await User.findOne({ username: id })
+    console.log("Rating: "+user._id)
+    await User.findByIdAndUpdate({_id: user._id}, {$addToSet: {ratings: rating}})
     res.status(200).send("Added")
   } catch (err) {
     res.status(500).send("Internal Server Error")

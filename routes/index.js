@@ -30,7 +30,7 @@ api.post('/events', EventCtrl.postEvent)
 
 //UserCtrl
 api.get('/users', auth, UserCtrl.getUsers)
-api.get('/users/:username', auth, UserCtrl.getUserbyusername)
+api.get('/users/:username', UserCtrl.getUserbyusername)
 api.get('/users/info/:_id', UserCtrl.getUserbyid)
 api.get('/getmatches', auth, UserCtrl.getMatchbyid)
 
@@ -43,7 +43,7 @@ api.get('/private', auth, (req,res) => {
 api.get('/events', EventCtrl.getEvents)
 
 //PUT
-api.put('/users', UserCtrl.updateUser)
+api.put('/users', auth, UserCtrl.updateUser)
 
 //DELETE
 api.delete('/users/:_id', auth, UserCtrl.deleteUser)
