@@ -33,14 +33,15 @@ EventCtrl.postEvent = async (req,res) => {
 EventCtrl.getEvents = async (req,res) => {
     try{
     let events = await Event.find()
+    console.log(events)
     let userevents = await User.findById(req.body._id).populate('events')
-    events.forEach(function(event){
-        for( var i = 0; i < userevents.events.length; i++){
-            if ( usersevents.events[i].name === event.name){
-            events.splice(i, 1);
+    for(var i=0; i< events.length; i++){
+        userevents.events.forEach(function(event){
+            if(event.name === events[i].name){
+                events.splice(i,1);
             }
-          }
-    })
+        })
+    }
     res.status(200).send(events)
     }
     catch (err){
