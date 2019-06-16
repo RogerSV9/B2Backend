@@ -43,7 +43,7 @@ api.get('/private', auth, (req,res) => {
 api.get('/events', EventCtrl.getEvents)
 
 //PUT
-api.put('/users', auth, UserCtrl.updateUser)
+api.put('/users', UserCtrl.updateUser)
 
 //DELETE
 api.delete('/users/:_id', auth, UserCtrl.deleteUser)

@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     age: {type: String},
     signUpDate: { type: Date, default: Date.now()},
     lastLogin: { type: Date, default: Date.now()},
-    picture: String,
+    picture: { type: String, default: "http://res.cloudinary.com/dg7ybkbb8/image/upload/v1560599232/p1fta3hozjio1j0a1mwx.png" },
     description: String,
     localization: String,
     category: {type: String, enum: ['user', 'premium', 'admin'], default: 'user'},
